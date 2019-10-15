@@ -1,5 +1,13 @@
 resources:
     App\Entity\Greeting: ~
+    App\Entity\PasswordResetRequest:
+        collectionOperations:
+            post:
+                status: 202
+        itemOperations: []
+        attributes:
+            messenger: true
+            output: false
 #        shortName: 'Greeting'
 #    App\Entity\Product: ~
 #    App\Entity\Offer:
