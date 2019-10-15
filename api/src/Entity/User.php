@@ -2,16 +2,30 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 class User implements UserInterface
 {
+    /**
+     * @Groups({"user-read"})
+     */
     private $id;
 
+    /**
+     * @Groups({"user-write", "user-read"})
+     */
     private $email;
 
+    /**
+     * @Groups({"user-read"})
+     */
     private $roles = [];
+
+    /**
+     * @Groups({"user-write"})
+     */
+    private $plainPassword;
 
     private $password;
 
@@ -39,7 +53,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -66,7 +80,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -90,6 +104,18 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
